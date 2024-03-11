@@ -1,0 +1,7 @@
+set serveroutput on
+ CREATE OR REPLACE PROCEDURE welcome
+  AS
+  BEGIN
+     dbms_output.put_line('Hai!');
+  END;
+ /
