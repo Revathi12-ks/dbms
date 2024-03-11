@@ -1,0 +1,12 @@
+create function sqarea1(len int)return int is
+    area int(5,3);
+    begin
+    area:=(len*len);
+    return area;
+    end;
+  /
+Function created
+ begin
+  dbms_output.Put_line('area='||sqarea1(4));
+  end;
+  /
