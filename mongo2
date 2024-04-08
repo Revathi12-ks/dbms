@@ -1,0 +1,44 @@
+            1.Create database named college,collection named s2mca 
+ use college
+db.createCollection("stud")
+
+            2.Insert data
+db.s2mca.insert({roll:1,name:'ram',age:20,div:'A',sub:['phy','che']})
+db.s2mca.insert({roll:2,name:'sam',age:21,div:'b',sub:['phy','mat']})
+db.s2mca.insert({roll:3,name:'june',age:21,div:'c',sub:['phy','eng']})
+db.s2mca.find()
+            3. Display total number of students in one section
+db.s2mca.aggregate([{$match:{div:'A'}},{$count:'total stud in A'}]);
+        4. Displaying the total number of students in both the sections and maximum age from both 
+section
+db.s2mca.aggregate([{$group:{_id:'$div',total_st:{$sum:1},max_age:{$max:'$age'}}}])
+[
+ { _id: 'A', total_st: 2, max_age: 21 },
+ { _id: 'b', total_st: 1, max_age: 21 },
+ { _id: 'c', total_st: 1, max_age: 21 }
+        5. Displaying details of students whose age is greater than 30 using match stage 
+db.s2mca.aggregate([{$match:{age:{$gt:20}}}])
+        6. Sorting the students on the basis of age
+db.s2mca.aggregate([{'$sort':{'age':1}}])
+        7. Sorting the students on the basis of age in descending order
+db.s2mca.aggregate([{'$sort':{'age':-1}}])
+        8. Displaying details of a student having the largest age in the section – B 
+db.s2mca.aggregate([{$match:{div:"A"}},{'$sort':{'age':-1}},{$limit:1}])
+        9. Unwinding students on the basis of subject 
+db.s2mca.aggregate([{$unwind:'$sub'}]) 
+        10.Calculate average age of students
+db.s2mca.aggregate([{$group:{_id:'roll',averageAge:{$avg:'$age'}}}]);
+         11.  Count the number of male and female students
+db.s2mca.aggregate([{$group:{_id:'$gender',count:{$sum:1}}}]);
+            12.Find courses with highest number of credit
+db.s2mca.aggregate([{$sort:{credit:-1}},{$limit:1}])
+Regular expression
+         1. Find students that names start with j
+db.s2mca.find({name:/^j/});
+         2. Find course which contain subject ‘chemistry’
+db.s2mca.find({sub:/che/});
+  db.students.find({ name: /^J/ });
+       3. Find courses with codes containing "ENG"
+db.course.find({ code: /ENG/ });
+          4.Case-insensitive search for students with "june" in their name
+db.s2mca.find({name:/june/i});
