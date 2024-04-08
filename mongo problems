@@ -1,0 +1,25 @@
+           1.create database named univ and collection named s1mca
+use univ
+db.s1mca.insertMany([
+    { name: "John", gender: "male", department: "Computer Science" },
+    { name: "Alice", gender: "female", department: "Computer Science" },
+    { name: "Emma", gender: "female", department: "Information Technology" },
+    { name: "Michael", gender: "male", department: "Information Technology" },
+])
+          2.List all female students
+db.s1mca.find({ gender: "female" })
+          3.List all male students
+db.s1mca.find({ gender: "male" })
+          4.Find total number of students in each department
+db.s1mca.aggregate([
+    { $group: { _id: "$department", totalStudents: { $sum: 1 } } }
+])
+         5.display dpmt name and sum of all male employees in each department 
+db.s1mca.aggregate([
+    { $match: { gender: "male" } },
+    { $group: { _id: "$department", totalMaleEmployees: { $sum: 1 } } }
+])
+          6.display dpmt name and avg marks in each department
+db.s1mca.aggregate([
+    { $group: { _id: "$department", averageMarks: { $avg: "$marks" } } }
+])
